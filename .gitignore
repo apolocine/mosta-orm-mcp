@@ -1,0 +1,7 @@
+node_modules
+dist
+logs
+.env
+*.tgz
+test-scripts
+docs

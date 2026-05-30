@@ -1,0 +1,34 @@
+# @mostajs/orm-mcp — fiche LLM
+> Serveur MCP exposant le tooling schéma de @mostajs/orm aux IA de dev.
+
+- Version: 0.1.0 · Licence: AGPL-3.0-or-later · Auteur: Dr Hamid MADANI <drmdh@msn.com>
+- Instance hébergée: https://orm-mcp.amia.fr/mcp (Streamable HTTP). Health humain: https://orm-mcp.amia.fr/
+
+## RÔLE
+Donne aux IA (Claude, Cursor, Cline…) trois outils pour travailler avec @mostajs/orm
+sans relire son code. Réutilise l'API publique de l'ORM (validateSchemas, diffSchemas,
+generateMigrationSQL) — aucune logique réimplémentée.
+
+## OUTILS (MCP tools)
+- `mostajs_generate_schema(name, fields[], collection?, relations[]?, timestamps?, softDelete?)`
+  → EntitySchema TypeScript prêt à coller, déjà passé au validator (24 règles).
+  - field = { name, type: string|text|number|boolean|date|json|array, required?, unique?, default? }
+  - relation = { name, target, type: one-to-one|one-to-many|many-to-one|many-to-many, required?, mappedBy?, onDelete? }
+- `mostajs_validate(schemas[], sourceRoot?)`
+  → rapport { schemaCount, findings[], countBySeverity, countByRule, durationMs }.
+  `sourceRoot` (règles cross-file R005/R007/R008/R019…) actif UNIQUEMENT en mode stdio local ;
+  ignoré sur le serveur HTTP hébergé (sécurité : pas de lecture FS arbitraire).
+- `mostajs_create_migration(oldSchemas[], newSchemas[])`
+  → instructions SQL de migration (diffSchemas + generateMigrationSQL). oldSchemas=[] pour une base neuve.
+
+## TRANSPORTS
+- stdio (défaut) : `npx @mostajs/orm-mcp` — l'outil IA lance le process. FS autorisé (local).
+- Streamable HTTP : `--http` ou `PORT` env → endpoint POST `/mcp`, health `GET /`. FS désactivé.
+
+## CONNEXION CLIENT
+- HTTP hébergé : `{ "mcpServers": { "mostajs-orm": { "url": "https://orm-mcp.amia.fr/mcp" } } }`
+- stdio local : `{ "mcpServers": { "mostajs-orm": { "command": "npx", "args": ["-y","@mostajs/orm-mcp"] } } }`
+- pont stdio→HTTP : `npx mcp-remote https://orm-mcp.amia.fr/mcp`
+
+## DÉPENDANCES
+@modelcontextprotocol/sdk, @mostajs/orm (>=2.5.1), express, zod. Aucun secret, sans état.

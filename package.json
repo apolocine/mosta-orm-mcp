@@ -1,0 +1,63 @@
+{
+  "name": "@mostajs/orm-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for @mostajs/orm — lets AI dev tools (Claude, Cursor, Cline) generate EntitySchemas, lint them (24 rules), and produce SQL migrations.",
+  "license": "AGPL-3.0-or-later",
+  "author": "Dr Hamid MADANI <drmdh@msn.com>",
+  "type": "module",
+  "bin": {
+    "mostajs-orm-mcp": "dist/index.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "llms.txt",
+    "LICENSE"
+  ],
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "mostajs",
+    "orm",
+    "schema",
+    "migration",
+    "validator",
+    "ai-tools",
+    "code-generation"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apolocine/mosta-orm-mcp.git"
+  },
+  "homepage": "https://mostajs.dev",
+  "engines": {
+    "node": ">=18.18.0"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "@mostajs/orm": "^2.5.1",
+    "express": "^4.21.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0"
+  },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/apolocine"
+  }
+}
