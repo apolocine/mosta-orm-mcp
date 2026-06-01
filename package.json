@@ -1,6 +1,7 @@
 {
   "name": "@mostajs/orm-mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "mcpName": "io.github.apolocine/orm-mcp",
   "description": "MCP server for @mostajs/orm — lets AI dev tools (Claude, Cursor, Cline) generate EntitySchemas, lint them (24 rules), and produce SQL migrations.",
   "license": "AGPL-3.0-or-later",
   "author": "Dr Hamid MADANI <drmdh@msn.com>",

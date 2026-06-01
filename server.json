@@ -1,0 +1,20 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.apolocine/orm-mcp",
+  "description": "MCP server for @mostajs/orm — generate EntitySchemas, lint them (24 rules), and produce SQL migrations from AI dev tools (Claude, Cursor, Cline).",
+  "repository": {
+    "url": "https://github.com/apolocine/mosta-orm-mcp",
+    "source": "github"
+  },
+  "version": "0.1.1",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@mostajs/orm-mcp",
+      "version": "0.1.1",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+# Publie ce serveur au registre officiel MCP (registry.modelcontextprotocol.io)
+# via GitHub OIDC — AUCUN secret requis. Déclenché par un tag `v*`.
+#
+# Pré-requis : le package npm `@mostajs/orm-mcp` (avec le champ `mcpName` dans
+# package.json) doit déjà être publié sur npm AVANT le tag (publication npm
+# manuelle via le token apolocine). Le registre ne stocke que les métadonnées
+# (server.json) et vérifie que le package npm porte le bon `mcpName`.
+#
+# Auteur : Dr Hamid MADANI <drmdh@msn.com>
+name: Publish to MCP Registry
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch: {}
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write   # requis pour l'auth OIDC
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Install mcp-publisher
+        run: |
+          curl -L "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_$(uname -s | tr '[:upper:]' '[:lower:]')_$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/').tar.gz" | tar xz mcp-publisher
+
+      - name: Authenticate to MCP Registry (GitHub OIDC)
+        run: ./mcp-publisher login github-oidc
+
+      - name: Publish server.json to MCP Registry
+        run: ./mcp-publisher publish
