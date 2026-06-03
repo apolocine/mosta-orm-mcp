@@ -61,6 +61,21 @@ PORT=14510 npx @mostajs/orm-mcp        # or: npx @mostajs/orm-mcp --http
 
 Serves the MCP endpoint at `/mcp` (POST) and a health/info page at `/`.
 
+## End-to-end example
+
+Want to see the schemas this server generates actually **run**? Sample
+[`18-mcp-to-running-app`](https://github.com/apolocine/mosta-orm-samples/tree/main/examples/18-mcp-to-running-app)
+takes it the whole way: this MCP generates the `EntitySchema` for an e-commerce model
+(users/products/orders), then [`@mostajs/orm`](https://www.npmjs.com/package/@mostajs/orm)
+applies them and the app runs on **`sqljs`** (SQLite WASM, zero native binary). Its
+`scripts/02-report.sh` produces a standalone HTML report — the MCP exchange next to the
+real insert/select output.
+
+```bash
+npx @mostajs/orm-samples scaffold 18-mcp-to-running-app ~/my-mcp-app
+cd ~/my-mcp-app && bash scripts/02-report.sh   # → report.html
+```
+
 ## License
 
 **AGPL-3.0-or-later** — © Dr Hamid MADANI. Commercial licensing for `@mostajs/orm`: drmdh@msn.com.
